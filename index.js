@@ -46,7 +46,7 @@ app.listen(PORT, () => {
                 })
                 .catch(err => console.log(err));
             
-            message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
+            message.channel.send(Math.round(curPrice) + " " + curArrow + " " +curDollars + " " + curPerc);
         }
 
         if (message.content === `${prefix}tslapre`) {
