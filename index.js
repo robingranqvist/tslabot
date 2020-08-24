@@ -32,20 +32,7 @@ app.listen(PORT, () => {
 
         if (message.content === `${prefix}tsla`) {
             // Scrape data
-            axios.get(url)
-                .then(res => {
-                    const $ = cheerio.load(res.data);
-                    price = $('.price-and-changes').text();
-                    priceArr = fixShit(price);
-
-                    // Splitted
-                    curPrice = "$" + priceArr[0];
-                    curArrow = priceArr[1];
-                    curDollars = "$" + priceArr[2];
-                    curPerc = priceArr[3];
-                })
-                .catch(err => console.log(err));
-            
+            getShit();
             message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
         }
 
@@ -61,6 +48,22 @@ app.listen(PORT, () => {
         str = str.trim();
         str = str.split(" ");
         return str;
+    }
+
+    function getShit() {
+        axios.get(url)
+            .then(res => {
+                const $ = cheerio.load(res.data);
+                price = $('.price-and-changes').text();
+                priceArr = fixShit(price);
+
+                // Splitted
+                curPrice = "$" + priceArr[0];
+                curArrow = priceArr[1];
+                curDollars = "$" + priceArr[2];
+                curPerc = priceArr[3];
+            })
+            .catch(err => console.log(err));
     }
 })
 
