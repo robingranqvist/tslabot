@@ -45,7 +45,9 @@ app.listen(PORT, () => {
         }
 
         if (message.content === `${prefix}test`) {
-            message.channel.send(oldPrices);
+            message.channel.send(oldPrices.forEach(function(i) {
+                i
+            }));
         }
 
     });
