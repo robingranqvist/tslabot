@@ -37,12 +37,12 @@ app.listen(PORT, () => {
         }
 
         if (message.content === `${prefix}tslapre`) {
-            getShit();
+            getPrice()
             message.channel.send("$" + price * 5);
         }
 
         if (message.content === `${prefix}fredda`) {
-            getShit();
+            getPrice()
             message.channel.send(price * 16);
         }
     });
