@@ -55,5 +55,12 @@ app.listen(PORT, () => {
     });
 
     client.login(token);
+
+    function fixShit(str) {
+        str = str.replace(/(\r\n|\n|\r)/gm, "");
+        str = str.trim();
+        str = str.split(" ");
+        return str;
+    }
 })
 
