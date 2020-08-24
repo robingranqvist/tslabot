@@ -10,7 +10,7 @@ const client = new Discord.Client();
 
 // Scrape
 const axios = require('axios');
-const cheerio = require('cheerio');
+const cheerio = require('cheerio'); 
 
 let price;
 let priceArr;
