@@ -38,9 +38,9 @@ app.listen(PORT, () => {
             message.channel.send("$" + price);
         }
 
-        if (message.content === `${prefix}tslapre`) {
-            message.channel.send("$" + price * 5);
-        }
+        // if (message.content === `${prefix}tslapre`) {
+        //     message.channel.send("$" + price * 5);
+        // }
 
         if (message.content === `${prefix}tslapre`) {
             oldPrices.forEach(function(i) {
