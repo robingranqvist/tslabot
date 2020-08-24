@@ -39,7 +39,7 @@ client.on('message', message => {
         message.channel.send(price);
     }
 
-    if(message.content.startsWith(`${prefix}tslapre`)) {
+    if(message.content.startsWith(`${prefix}pre`)) {
         message.channel.send(price * 5);
     }
 });
