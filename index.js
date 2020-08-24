@@ -49,7 +49,7 @@ app.listen(PORT, () => {
             message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
         }
 
-        if (message.content === `${prefix}tslapre`) {
+        if (message.content === `${prefix}tslapre`) { 
             message.channel.send("$" + price * 5);
         }
     });
