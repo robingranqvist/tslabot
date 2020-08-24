@@ -38,6 +38,10 @@ client.on('message', message => {
     if(message.content.startsWith(`${prefix}tsla`)) {
         message.channel.send(price);
     }
+
+    if(message.content.startsWith(`${prefix}tslapre`)) {
+        message.channel.send(price * 5);
+    }
 });
 
 client.login(token);
