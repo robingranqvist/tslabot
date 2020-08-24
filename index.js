@@ -39,7 +39,7 @@ app.listen(PORT, () => {
                     priceArr = fixShit(price);
 
                     // Splitted
-                    curPrice = "$" + priceArr[0];
+                    curPrice = "$" + Math.round(priceArr[0]);
                     curArrow = priceArr[1];
                     curDollars = "$" + priceArr[2];
                     curPerc = priceArr[3];
