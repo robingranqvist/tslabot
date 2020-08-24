@@ -75,5 +75,16 @@ app.listen(PORT, () => {
             })
             .catch(err => console.log(err));
     }
+
+    function getPrice() {
+        axios.get(url)
+            .then(res => {
+                const $ = cheerio.load(res.data);
+                price = $('.price-and-changes').text();
+                priceArr = fixShit(price);
+                return price;
+            })
+            .catch(err => console.log(err));
+    }
 })
 
