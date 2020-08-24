@@ -10,11 +10,13 @@ const url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const price;
+
 axios.get('https://stocktwits.com/symbol/TSLA')
     .then(res => {
         const $ = cheerio.load(res.data);
 
-        const price = $('.st_3zYaKAL').text();
+        price = $('.st_3zYaKAL').text();
         const percentage = $('.st_3Z2BeqA').text();
         console.log("Pris:", price);
         console.log(percentage);
