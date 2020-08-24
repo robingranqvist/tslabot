@@ -27,7 +27,8 @@ app.listen(PORT, () => {
 
         if (message.content === `${prefix}tsla`) {
             // Scrape data
-            axios.get('https://stocktwits.com/symbol/TSLA')
+            const test = async function () {
+                axios.get('https://stocktwits.com/symbol/TSLA')
                 .then(res => {
                     const $ = cheerio.load(res.data);
 
@@ -36,11 +37,14 @@ app.listen(PORT, () => {
 
                     // To array
                     oldPrices.append(price);
+                    return price;
                 })
                 .catch(err => console.log(err));
+            }
 
             // Message
-            message.channel.send("$" + price + " " + percentage);
+            //message.channel.send("$" + price + " " + percentage);
+            message.channel.send(await test());
         }
 
         if (message.content === `${prefix}tslapre`) {
