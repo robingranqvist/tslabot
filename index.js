@@ -44,11 +44,15 @@ app.listen(PORT, () => {
         // }
 
         if (message.content === `${prefix}tslapre`) {
-            oldPrices.forEach(function(i) {
-                priceStr += i;
-            });
+            function str() {
+                oldPrices.forEach(function(i) {
+                    priceStr += i;
+                });
 
-            message.channel.send(priceStr);
+                return priceStr;
+            }
+
+            message.channel.send(str());
         }
     });
 
