@@ -32,9 +32,9 @@ app.listen(PORT, () => {
                 percentage = $('.st_3Z2BeqA').text();
 
                 // To array
-                oldPrices.append(price);
             })
             .catch(err => console.log(err));
+            oldPrices.append(price);
             message.channel.send("$" + price);
         }
 
