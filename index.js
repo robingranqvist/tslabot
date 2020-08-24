@@ -19,7 +19,7 @@ axios.get('https://stocktwits.com/symbol/TSLA')
         console.log("Pris:", price);
         console.log(percentage);
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)); 
 
 // Discord
 client.once('ready', () => {
