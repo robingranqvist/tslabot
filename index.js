@@ -29,11 +29,11 @@ client.once('ready', () => {
 client.on('message', message => {
 
     if (message.content === `${prefix}tsla`) {
-        message.channel.send("$" + price);
+        message.channel.send("$ " + price);
     }
 
     if (message.content === `${prefix}tslapre`) {
-        message.channel.send("$" + price * 5);
+        message.channel.send("$ " + price * 5);
     }
 });
 
