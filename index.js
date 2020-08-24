@@ -32,7 +32,7 @@ app.listen(PORT, () => {
                     const $ = cheerio.load(res.data);
 
                     price = $('.st_3zYaKAL').text();
-                    percentage = $('.st_3Z2BeqA').text();
+                    percentage = $('.st_3E7muvq').text();
 
                     // To array
                     oldPrices.append(price);
