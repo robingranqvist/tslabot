@@ -28,7 +28,7 @@ app.listen(PORT, () => {
         .then(console.log)
         .catch(console.error);
         
-        setTimeout(function(){ console.log("Hello"); }, 900000);
+        setTimeout(function(){ console.log("Hello"); }, 300000);
     });
     // Discord
 
