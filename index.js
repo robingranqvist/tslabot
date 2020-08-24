@@ -35,11 +35,11 @@ client.once('ready', () => {
 
 client.on('message', message => {
 
-    if(message.content.startsWith(`${prefix}tsla`)) {
+    if (message.content === `${prefix}tsla`) {
         message.channel.send(price);
     }
 
-    if(message.content.startsWith(`${prefix}pre`)) {
+    if (message.content === `${prefix}tslapre`) {
         message.channel.send(price * 5);
     }
 });
