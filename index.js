@@ -20,17 +20,7 @@ app.listen(PORT, () => {
 
     // Discord
     client.once('ready', () => {
-        axios.get('https://stocktwits.com/symbol/TSLA')
-            .then(res => {
-                const $ = cheerio.load(res.data);
-
-                price = $('.st_3zYaKAL').text();
-                percentage = $('.st_3Z2BeqA').text();
-                oldPrice = price;
-                // To array
-                oldPrices.append(price);
-            })
-            .catch(err => console.log(err));
+        console.log("ready");
     });
 
     client.on('message', message => {
