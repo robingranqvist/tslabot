@@ -37,12 +37,12 @@ app.listen(PORT, () => {
         }
 
         if (message.content === `${prefix}tslapre`) {
-            getPrice()
+            price = parseInt(getPrice());
             message.channel.send("$" + price * 5);
         }
 
         if (message.content === `${prefix}fredda`) {
-            getPrice()
+            price = parseInt(getPrice());
             message.channel.send(price * 16);
         }
     });
@@ -82,10 +82,9 @@ app.listen(PORT, () => {
                 const $ = cheerio.load(res.data);
                 price = $('.price-and-changes').text();
                 priceArr = fixShit(price);
-                
+                return price;
             })
             .catch(err => console.log(err));
-            return price;
     }
 })
 
