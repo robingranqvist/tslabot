@@ -9,8 +9,16 @@ const cheerio = require('cheerio');
 let price;
 let percentage;
 
-// Scrape
-axios.get('https://stocktwits.com/symbol/TSLA')
+
+
+// Discord
+client.once('ready', () => {
+    console.log("Ready");
+});
+
+client.on('message', message => {
+    // Scrape
+    axios.get('https://stocktwits.com/symbol/TSLA')
     .then(res => {
         const $ = cheerio.load(res.data);
 
@@ -19,14 +27,7 @@ axios.get('https://stocktwits.com/symbol/TSLA')
         console.log("Pris:", price);
         console.log(percentage);
     })
-    .catch(err => console.log(err)); 
-
-// Discord
-client.once('ready', () => {
-    console.log("Ready");
-});
-
-client.on('message', message => {
+    .catch(err => console.log(err));
 
     if (message.content === `${prefix}tsla`) {
         message.channel.send("$" + price);
