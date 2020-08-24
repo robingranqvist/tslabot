@@ -13,8 +13,8 @@ const cheerio = require('cheerio');
 let price;
 let percentage;
 let oldPrices = [];
-let priceStr = "";
-let oldPrice;
+let prev;
+const url = 'https://www.stockmonitor.com/quote/tsla/';
 
 app.listen(PORT, () => {
 
@@ -27,20 +27,13 @@ app.listen(PORT, () => {
 
         if (message.content === `${prefix}tsla`) {
             // Scrape data
-            axios.get('https://stocktwits.com/symbol/TSLA')
+            axios.get(url)
                 .then(res => {
                     const $ = cheerio.load(res.data);
+                    price = $('.price-and-changes').text();
 
-                    price = $('.st_3zYaKAL').text();
-                    percentage = $('.st_3E7muvq').text();
-
-                    // To array
-                    oldPrices.append(price);
                 })
                 .catch(err => console.log(err));
-
-            // Message
-            message.channel.send("$" + price + " " + percentage);
         }
 
         if (message.content === `${prefix}tslapre`) {
