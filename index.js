@@ -24,30 +24,27 @@ const url = 'https://www.stockmonitor.com/quote/tsla/';
 app.listen(PORT, () => {
 
     // Discord
-    client.once('ready', () => {
-        console.log("ready");
+    client.on('ready', () => {
+        client.user.setPresence({
+            game: {
+              name: 'Monies 🤑',
+              type: 'Making',
+            },
+            status: 'online',
+        });
+
+        setTimeout(function(){ console.log("Hello"); }, 900000);
     });
 
     client.on('message', message => {
 
         if (message.content === `${prefix}tsla`) {
-            // Scrape data
+
+            // Scrape shit
             getShit();
             message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
         }
-
-        if (message.content === `${prefix}tslapre`) {
-            price = parseInt(getPrice());
-            message.channel.send("$" + price * 5);
-        }
-
-        if (message.content === `${prefix}fredda`) {
-            price = parseInt(getPrice());
-            message.channel.send(price * 16);
-        }
     });
-
-    client.login(token);
 
     function fixShit(str) {
         str = str.replace(/(\r\n|\n|\r)/gm, "");
@@ -76,15 +73,6 @@ app.listen(PORT, () => {
             .catch(err => console.log(err));
     }
 
-    function getPrice() {
-        axios.get(url)
-            .then(res => {
-                const $ = cheerio.load(res.data);
-                price = $('.price-and-changes').text();
-                priceArr = fixShit(price);
-                return price;
-            })
-            .catch(err => console.log(err));
-    }
+    client.login(token);
 })
 
