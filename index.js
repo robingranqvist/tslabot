@@ -32,9 +32,7 @@ app.listen(PORT, () => {
                 percentage = $('.st_3Z2BeqA').text();
 
                 // To array
-                if (oldPrices.length <= 10) {
-                    oldPrices.append(price);
-                }
+                oldPrices.append(price);
             })
             .catch(err => console.log(err));
             message.channel.send("$" + price);
@@ -44,12 +42,11 @@ app.listen(PORT, () => {
             message.channel.send("$" + price * 5);
         }
 
-        if (message.content === `${prefix}reva`) {
+        if (message.content === `${prefix}tslapre`) {
             oldPrices.forEach(function(i) {
                 message.channel.send(i);
             });
         }
-
     });
 
     client.login(token);
