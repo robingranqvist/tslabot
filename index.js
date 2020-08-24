@@ -34,6 +34,8 @@ app.listen(PORT, () => {
 
                 })
                 .catch(err => console.log(err));
+            
+            message.channel.send(price);
         }
 
         if (message.content === `${prefix}tslapre`) {
