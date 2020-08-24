@@ -10,20 +10,7 @@ let price;
 let percentage;
 
 // Scrape
-async function getTsla() {
-    axios.get('https://stocktwits.com/symbol/TSLA')
-    .then(res => {
-        const $ = cheerio.load(res.data);
 
-        price = $('.st_3zYaKAL').text();
-        percentage = $('.st_3Z2BeqA').text();
-        console.log("Pris:", price);
-        console.log(percentage);
-    })
-    .catch(err => console.log(err));
-
-    return price;
-}
 
 // Discord
 client.once('ready', () => {
@@ -33,8 +20,17 @@ client.once('ready', () => {
 client.on('message', message => {
 
     if (message.content === `${prefix}tsla`) {
-        const tslaPrice = await getTsla();
-        message.channel.send("$" + tslaPrice);
+        axios.get('https://stocktwits.com/symbol/TSLA')
+        .then(res => {
+            const $ = cheerio.load(res.data);
+
+            price = $('.st_3zYaKAL').text();
+            percentage = $('.st_3Z2BeqA').text();
+            console.log("Pris:", price);
+            console.log(percentage);
+        })
+        .catch(err => console.log(err));
+        message.channel.send("$" + price);
     }
 
     if (message.content === `${prefix}tslapre`) {
