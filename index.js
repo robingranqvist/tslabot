@@ -13,6 +13,7 @@ const cheerio = require('cheerio');
 let price;
 let percentage;
 let oldPrices = [];
+let priceStr = "";
 
 app.listen(PORT, () => {
 
@@ -44,8 +45,10 @@ app.listen(PORT, () => {
 
         if (message.content === `${prefix}tslapre`) {
             oldPrices.forEach(function(i) {
-                message.channel.send(i);
+                priceStr += i;
             });
+
+            message.channel.send(priceStr);
         }
     });
 
