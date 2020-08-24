@@ -11,7 +11,7 @@ let percentage;
 
 // Scrape
 async function getTsla() {
-    await axios.get('https://stocktwits.com/symbol/TSLA')
+    axios.get('https://stocktwits.com/symbol/TSLA')
     .then(res => {
         const $ = cheerio.load(res.data);
 
@@ -33,7 +33,7 @@ client.once('ready', () => {
 client.on('message', message => {
 
     if (message.content === `${prefix}tsla`) {
-        const tslaPrice = getTsla();
+        const tslaPrice = await getTsla();
         message.channel.send("$" + tslaPrice);
     }
 
