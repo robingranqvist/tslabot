@@ -13,6 +13,12 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 let price;
+let priceArr;
+let curPrice;
+let curArrow;
+let curDollars;
+let curPerc;
+
 const url = 'https://www.stockmonitor.com/quote/tsla/';
 
 app.listen(PORT, () => {
