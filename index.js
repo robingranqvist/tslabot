@@ -1,7 +1,9 @@
+// Server
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Discord
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
@@ -11,9 +13,6 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 let price;
-let percentage;
-let oldPrices = [];
-let prev;
 const url = 'https://www.stockmonitor.com/quote/tsla/';
 
 app.listen(PORT, () => {
@@ -31,11 +30,17 @@ app.listen(PORT, () => {
                 .then(res => {
                     const $ = cheerio.load(res.data);
                     price = $('.price-and-changes').text();
+                    priceArr = fixShit(price);
 
+                    // Splitted
+                    curPrice = "$" + priceArr[0];
+                    curArrow = priceArr[1];
+                    curDollars = "$" + priceArr[2];
+                    curPerc = priceArr[3];
                 })
                 .catch(err => console.log(err));
             
-            message.channel.send(price);
+            message.channel.send(curPrice, curArrow, curDollars, curPerc);
         }
 
         if (message.content === `${prefix}tslapre`) {
@@ -44,6 +49,5 @@ app.listen(PORT, () => {
     });
 
     client.login(token);
-
 })
 
