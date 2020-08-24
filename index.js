@@ -6,6 +6,20 @@ const client = new Discord.Client();
 const fetch = require('node-fetch');
 const url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSLA&apikey=349CBXO0QJ1EIWJX";
 
+// Scrape
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+axios.get('https://stocktwits.com/symbol/TSLA')
+    .then(res => {
+        const $ = cheerio.load(res.data);
+
+        const price = $('.st_3zYaKAL').text();
+        const percentage = $('.st_3Z2BeqA').text();
+        console.log("Pris:", price);
+        console.log(percentage);
+    });
+
 let TSLA;
 
 const data = fetch(url)
@@ -23,7 +37,7 @@ client.on('message', message => {
     console.log(message.content);
 
     if(message.content.startsWith(`${prefix}tsla`)) {
-        message.channel.send("$" + TSLA);
+        message.channel.send(price);
     }
 
     if(message.content.startsWith(`${prefix}fredda`)) {
