@@ -12,6 +12,7 @@ const cheerio = require('cheerio');
 
 let price;
 let percentage;
+let oldPrices = [];
 
 app.listen(PORT, () => {
 
@@ -29,8 +30,11 @@ app.listen(PORT, () => {
 
                 price = $('.st_3zYaKAL').text();
                 percentage = $('.st_3Z2BeqA').text();
-                console.log("Pris:", price);
-                console.log(percentage);
+
+                // To array
+                if (oldPrices.length <= 10) {
+                    oldPrices.append(price);
+                }
             })
             .catch(err => console.log(err));
             message.channel.send("$" + price);
@@ -39,6 +43,11 @@ app.listen(PORT, () => {
         if (message.content === `${prefix}tslapre`) {
             message.channel.send("$" + price * 5);
         }
+
+        if (message.content === `${prefix}test`) {
+            message.channel.send(oldPrices);
+        }
+
     });
 
     client.login(token);
