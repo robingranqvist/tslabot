@@ -24,7 +24,7 @@ const url = 'https://www.stockmonitor.com/quote/tsla/';
 app.listen(PORT, () => {
 
     // Discord
-    client.on('ready', () => {
+    client.once('ready', () => {
         client.user.setPresence({
             game: {
               name: 'Monies 🤑',
