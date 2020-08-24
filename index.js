@@ -24,11 +24,22 @@ const url = 'https://www.stockmonitor.com/quote/tsla/';
 app.listen(PORT, () => {
 
     client.on('ready', () => {
-        client.user.setPresence({ activity: { name: 'monies 🤑' }, status: 'Making' })
+        client.user.setPresence({ activity: { name: 'monies 🤑', type: 'Making' }, status: 'online' })
         .then(console.log)
         .catch(console.error);
         
         setTimeout(function(){ console.log("Hello"); }, 900000);
+    });
+    // Discord
+    client.once('ready', () => {
+        client.user.setPresence({
+            game: {
+              name: 'Monies 🤑',
+              type: 'Making',
+            },
+            status: 'online',
+        });
+
     });
 
     client.on('message', message => {
