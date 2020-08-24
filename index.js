@@ -36,8 +36,14 @@ app.listen(PORT, () => {
             message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
         }
 
-        if (message.content === `${prefix}tslapre`) { 
+        if (message.content === `${prefix}tslapre`) {
+            getShit();
             message.channel.send("$" + price * 5);
+        }
+
+        if (message.content === `${prefix}fredda`) {
+            getShit();
+            message.channel.send(price * 16);
         }
     });
 
@@ -50,6 +56,13 @@ app.listen(PORT, () => {
         return str;
     }
 
+    function fixString() {
+        curPrice = "$" + priceArr[0];
+        curArrow = priceArr[1];
+        curDollars = "$" + priceArr[2];
+        curPerc = priceArr[3];
+    }
+
     function getShit() {
         axios.get(url)
             .then(res => {
@@ -58,10 +71,7 @@ app.listen(PORT, () => {
                 priceArr = fixShit(price);
 
                 // Splitted
-                curPrice = "$" + priceArr[0];
-                curArrow = priceArr[1];
-                curDollars = "$" + priceArr[2];
-                curPerc = priceArr[3];
+                fixString();
             })
             .catch(err => console.log(err));
     }
