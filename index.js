@@ -10,8 +10,8 @@ let price;
 let percentage;
 
 // Scrape
-function getTsla() {
-    axios.get('https://stocktwits.com/symbol/TSLA')
+async function getTsla() {
+    await axios.get('https://stocktwits.com/symbol/TSLA')
     .then(res => {
         const $ = cheerio.load(res.data);
 
