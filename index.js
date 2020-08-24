@@ -40,7 +40,7 @@ app.listen(PORT, () => {
                 .catch(err => console.log(err));
 
             // Message
-            message.channel.send("$" + price, percentage);
+            message.channel.send("$" + price + " " + percentage);
         }
 
         if (message.content === `${prefix}tslapre`) {
