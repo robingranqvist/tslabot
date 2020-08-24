@@ -14,45 +14,47 @@ let price;
 let percentage;
 let oldPrices = [];
 let priceStr = "";
+let oldPrice;
 
 app.listen(PORT, () => {
 
     // Discord
     client.once('ready', () => {
-        console.log("Ready");
-    });
-
-    client.on('message', message => {
-
-        if (message.content === `${prefix}tsla`) {
-            axios.get('https://stocktwits.com/symbol/TSLA')
+        axios.get('https://stocktwits.com/symbol/TSLA')
             .then(res => {
                 const $ = cheerio.load(res.data);
 
                 price = $('.st_3zYaKAL').text();
                 percentage = $('.st_3Z2BeqA').text();
-
+                oldPrice = price;
                 // To array
                 oldPrices.append(price);
             })
             .catch(err => console.log(err));
-            message.channel.send("$" + price);
+    });
+
+    client.on('message', message => {
+
+        if (message.content === `${prefix}tsla`) {
+            // Scrape data
+            axios.get('https://stocktwits.com/symbol/TSLA')
+                .then(res => {
+                    const $ = cheerio.load(res.data);
+
+                    price = $('.st_3zYaKAL').text();
+                    percentage = $('.st_3Z2BeqA').text();
+
+                    // To array
+                    oldPrices.append(price);
+                })
+                .catch(err => console.log(err));
+
+            // Message
+            message.channel.send("$" + price, percentage);
         }
 
-        // if (message.content === `${prefix}tslapre`) {
-        //     message.channel.send("$" + price * 5);
-        // }
-
         if (message.content === `${prefix}tslapre`) {
-            function str() {
-                oldPrices.forEach(function(i) {
-                    priceStr += i;
-                });
-
-                return priceStr;
-            }
-
-            message.channel.send(str());
+            message.channel.send("$" + price * 5);
         }
     });
 
