@@ -9,6 +9,7 @@ const cheerio = require('cheerio');
 let price;
 let percentage;
 
+// Scrape
 axios.get('https://stocktwits.com/symbol/TSLA')
     .then(res => {
         const $ = cheerio.load(res.data);
@@ -20,15 +21,7 @@ axios.get('https://stocktwits.com/symbol/TSLA')
     })
     .catch(err => console.log(err));
 
-// let TSLA;
-
-// const data = fetch(url)
-//     .then(response => response.json())
-//     .then(data => {
-//         TSLA = Math.floor(data['Time Series (Daily)']['2020-08-21']['4. close']);
-//     })
-//     .catch(err => console.log(err));
-
+// Discord
 client.once('ready', () => {
     console.log("Ready");
 });
@@ -36,11 +29,11 @@ client.once('ready', () => {
 client.on('message', message => {
 
     if (message.content === `${prefix}tsla`) {
-        message.channel.send("$", price);
+        message.channel.send("$" + price);
     }
 
     if (message.content === `${prefix}tslapre`) {
-        message.channel.send("$", price * 5);
+        message.channel.send("$" + price * 5);
     }
 });
 
