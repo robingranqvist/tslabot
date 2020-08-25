@@ -57,7 +57,7 @@ app.listen(PORT, () => {
     
                 
             });
-        }, 1000);
+        }, 100000);
     });
     
     async function getTsla() {
