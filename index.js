@@ -8,7 +8,6 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 client.login(token);
-let channel = message.guild.channels.cache.get(247467831480811520);
 
 const axios = require('axios');
 let oldPriceArr = [];
@@ -20,6 +19,8 @@ Checks the price every 5 minutes
 app.listen(PORT, () => {
 
     client.on('ready', () => {
+        let channel = client.channels.cache.get('247467831480811520');
+        console.log(channel);
         client.user.setPresence({ activity: { name: '🤑🤑🤑' }, status: 'online' })
         .then(console.log)
         .catch(console.error);
