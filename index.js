@@ -46,9 +46,9 @@ app.listen(PORT, () => {
                 let currentPositive = c - oldPriceLast;
                 if (oldPriceArr.length > 2) {
                     if ((oldPriceLast - c) > 5) {
-                        channel.send("ALERT, WE'RE GOING DOWN BOIS! " + "-$" + currentNegative + c);
+                        channel.send("ALERT, WE'RE GOING DOWN BOIS! " + "-$" + currentNegative + " Price atm: $" + c);
                     } else if ((c - oldPriceLast) > 5) {
-                        channel.send("WE'RE GOING UP BOIS! " + "+$" + currentPositive + c);
+                        channel.send("WE'RE GOING UP BOIS! " + "+$" + currentPositive + " Price atm: $" + c);
                     } //else {
                     //     channel.send("Current price is " + "$" + c);
                     // }
