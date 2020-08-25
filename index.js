@@ -68,4 +68,4 @@ app.listen(PORT, () => {
 
     client.login(token);
 
-})();
+});
