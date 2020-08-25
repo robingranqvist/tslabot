@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
+var channel = client.channels.get('flappycock', nameOfChannel);
 
 const axios = require('axios');
 let oldPriceArr = [];
@@ -46,16 +47,18 @@ app.listen(PORT, () => {
             let currentPositive = c - oldPriceLast;
             if (oldPriceArr.length > 2) {
                 if ((oldPriceLast - c) > 1) {
-                    message.channel.send("ALERT, WE'RE GOING DOWN BOIS!", "-$" + currentNegative);
+                    channel.send("ALERT, WE'RE GOING DOWN BOIS! ", "-$" + currentNegative);
                 } else if ((c - oldPriceLast) > 1) {
-                    message.channel.send("WE'RE GOING UP BOIS!", "+$" + currentPositive);
+                    channel.send("WE'RE GOING UP BOIS! ", "+$" + currentPositive);
+                } else {
+                    channel.send("Current price is ", "+$" + c);
                 }
             }
             console.log(c, oldPriceLast);
 
             
         });
-    }, 60000);
+    }, 10000);
 
     async function getTsla() {
         try {
