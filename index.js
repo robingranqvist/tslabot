@@ -8,18 +8,12 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 
-// Scrape
 const axios = require('axios');
-const cheerio = require('cheerio'); 
+let oldPriceArr = [];
 
-let price;
-let priceArr;
-let curPrice;
-let curArrow;
-let curDollars;
-let curPerc;
-
-const url = 'https://www.stockmonitor.com/quote/tsla/';
+/*
+Checks the price every 5 minutes
+*/
 
 app.listen(PORT, () => {
 
@@ -30,45 +24,48 @@ app.listen(PORT, () => {
         
         setTimeout(function(){ console.log("Hello"); }, 300000);
     });
-    // Discord
+    
+    setInterval(function(){
+        let currentData = getTsla();
+        currentData.then(function(res) {
+            // Current
+            
+            let c = Math.round(res.c);
+            oldPriceArr.push(c);
+            oldPriceLast = oldPriceArr[oldPriceArr.length - 2];
+            
+            // Stores only 10 last items
+            if (oldPriceArr.length >= 10) {
+                oldPriceArr.splice(0, 1);
+            }
 
-    client.on('message', message => {
+            console.log(oldPriceArr);
+            // Open
+            // let o = Math.round(res.o);
+            let currentNegative = oldPriceLast - c;
+            let currentPositive = c - oldPriceLast;
+            if (oldPriceArr.length > 2) {
+                if ((oldPriceLast - c) > 1) {
+                    message.channel.send("ALERT, WE'RE GOING DOWN BOIS!", "-$" + currentNegative);
+                } else if ((c - oldPriceLast) > 1) {
+                    message.channel.send("WE'RE GOING UP BOIS!", "+$" + currentPositive);
+                }
+            }
+            console.log(c, oldPriceLast);
 
-        if (message.content === `${prefix}tsla`) {
+            
+        });
+    }, 60000);
 
-            // Scrape shit
-            getShit();
-            message.channel.send(curPrice + " " + curArrow + " " +curDollars + " " + curPerc);
+    async function getTsla() {
+        try {
+            let response = await axios.get('https://finnhub.io/api/v1/quote?symbol=TSLA&token=bt2h7mv48v6sbbrqq5jg');
+            return response.data;
+        } catch (error) {
+            return error.response.body;
         }
-    });
-
-    function fixShit(str) {
-        str = str.replace(/(\r\n|\n|\r)/gm, "");
-        str = str.trim();
-        str = str.split(" ");
-        return str;
-    }
-
-    function fixString() {
-        curPrice = "$" + priceArr[0];
-        curArrow = priceArr[1];
-        curDollars = "$" + priceArr[2];
-        curPerc = priceArr[3];
-    }
-
-    function getShit() {
-        axios.get(url)
-            .then(res => {
-                const $ = cheerio.load(res.data);
-                price = $('.price-and-changes').text();
-                priceArr = fixShit(price);
-
-                // Splitted
-                fixString();
-            })
-            .catch(err => console.log(err));
     }
 
     client.login(token);
-})
 
+})();
