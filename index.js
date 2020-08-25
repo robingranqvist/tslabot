@@ -8,7 +8,7 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 client.login(token);
-var channel = client.find("name","flappycock");
+let channel = message.guild.channels.cache.get(247467831480811520);
 
 const axios = require('axios');
 let oldPriceArr = [];
@@ -24,43 +24,41 @@ app.listen(PORT, () => {
         .then(console.log)
         .catch(console.error);
         
-        setTimeout(function(){ console.log("Hello"); }, 300000);
+        setInterval(function(){
+            let currentData = getTsla();
+            currentData.then(function(res) {
+                // Current
+                
+                let c = Math.round(res.c);
+                oldPriceArr.push(c);
+                oldPriceLast = oldPriceArr[oldPriceArr.length - 2];
+                
+                // Stores only 10 last items
+                if (oldPriceArr.length >= 10) {
+                    oldPriceArr.splice(0, 1);
+                }
+    
+                console.log(oldPriceArr);
+                // Open
+                // let o = Math.round(res.o);
+                let currentNegative = oldPriceLast - c;
+                let currentPositive = c - oldPriceLast;
+                if (oldPriceArr.length > 2) {
+                    if ((oldPriceLast - c) > 1) {
+                        channel.send("ALERT, WE'RE GOING DOWN BOIS! ", "-$" + currentNegative);
+                    } else if ((c - oldPriceLast) > 1) {
+                        channel.send("WE'RE GOING UP BOIS! ", "+$" + currentPositive);
+                    } else {
+                        channel.send("Current price is ", "+$" + c);
+                    }
+                }
+                console.log(c, oldPriceLast);
+    
+                
+            });
+        }, 10000);
     });
     
-    setInterval(function(){
-        let currentData = getTsla();
-        currentData.then(function(res) {
-            // Current
-            
-            let c = Math.round(res.c);
-            oldPriceArr.push(c);
-            oldPriceLast = oldPriceArr[oldPriceArr.length - 2];
-            
-            // Stores only 10 last items
-            if (oldPriceArr.length >= 10) {
-                oldPriceArr.splice(0, 1);
-            }
-
-            console.log(oldPriceArr);
-            // Open
-            // let o = Math.round(res.o);
-            let currentNegative = oldPriceLast - c;
-            let currentPositive = c - oldPriceLast;
-            if (oldPriceArr.length > 2) {
-                if ((oldPriceLast - c) > 1) {
-                    channel.send("ALERT, WE'RE GOING DOWN BOIS! ", "-$" + currentNegative);
-                } else if ((c - oldPriceLast) > 1) {
-                    channel.send("WE'RE GOING UP BOIS! ", "+$" + currentPositive);
-                } else {
-                    channel.send("Current price is ", "+$" + c);
-                }
-            }
-            console.log(c, oldPriceLast);
-
-            
-        });
-    }, 10000);
-
     async function getTsla() {
         try {
             let response = await axios.get('https://finnhub.io/api/v1/quote?symbol=TSLA&token=bt2h7mv48v6sbbrqq5jg');
@@ -69,7 +67,5 @@ app.listen(PORT, () => {
             return error.response.body;
         }
     }
-
-    
 
 });
