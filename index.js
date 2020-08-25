@@ -46,18 +46,16 @@ app.listen(PORT, () => {
                 let currentPositive = c - oldPriceLast;
                 if (oldPriceArr.length > 2) {
                     if ((oldPriceLast - c) > 1) {
-                        channel.send("ALERT, WE'RE GOING DOWN BOIS! ", "-$" + currentNegative);
+                        channel.send("ALERT, WE'RE GOING DOWN BOIS! " + "-$" + currentNegative);
                     } else if ((c - oldPriceLast) > 1) {
-                        channel.send("WE'RE GOING UP BOIS! ", "+$" + currentPositive);
+                        channel.send("WE'RE GOING UP BOIS! " + "+$" + currentPositive);
                     } else {
-                        channel.send("Current price is ", "+$" + c);
+                        channel.send("Current price is " + "$" + c);
                     }
                 }
                 console.log(c, oldPriceLast);
-    
-                
             });
-        }, 100000);
+        }, 300000);
     });
     
     async function getTsla() {
