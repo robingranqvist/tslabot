@@ -55,7 +55,7 @@ app.listen(PORT, () => {
                 }
                 console.log(c, oldPriceLast);
             });
-        }, 300000);
+        }, 30000);
     });
     
     async function getTsla() {
