@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
-var channel = client.channels.get('flappycock', nameOfChannel);
+var channel = client.channels.get("247467831480811520");
 
 const axios = require('axios');
 let oldPriceArr = [];
