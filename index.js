@@ -8,7 +8,7 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 client.login(token);
-var channel = client.channels.cache.get("247467831480811520");
+var channel = client.find("name","flappycock");
 
 const axios = require('axios');
 let oldPriceArr = [];
