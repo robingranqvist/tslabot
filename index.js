@@ -12,6 +12,7 @@ client.login(token);
 const axios = require("axios");
 const oldPriceArr = [];
 const MAX_OLD_PRICE_ARR = 10;
+const THRESHOLD = 5;
 
 /*
 Checks the price every 5 minutes
@@ -46,7 +47,7 @@ app.listen(PORT, () => {
         let currentNegative = oldPriceLast.c - c;
         let currentPositive = c - oldPriceLast.c;
         if (oldPriceArr.length > 2) {
-          if (oldPriceLast.c - c > 5) {
+          if (oldPriceLast.c - c > THRESHOLD) {
             channel.send(
               "ALERT, WE'RE GOING DOWN BOIS! " +
                 "-$" +
@@ -54,7 +55,7 @@ app.listen(PORT, () => {
                 " Price atm: $" +
                 c
             );
-          } else if (c - oldPriceLast.c > 5) {
+          } else if (c - oldPriceLast.c > THRESHOLD) {
             channel.send(
               "WE'RE GOING UP BOIS! " +
                 "+$" +
