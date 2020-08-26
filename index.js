@@ -10,6 +10,10 @@ const client = new Discord.Client();
 client.login(token);
 
 const axios = require("axios");
+let jsdom = require("jsdom");
+let Buffer = require("buffer").Buffer;
+let svg2png = require("svg2png");
+
 const oldPriceArr = [];
 const MAX_OLD_PRICE_ARR = 10;
 const THRESHOLD = 5;
@@ -64,6 +68,15 @@ app.listen(PORT, () => {
                 c
             );
           }
+
+          // Test
+          const image = createImg();
+          const imageStream = new Buffer(image, "base64");
+          const attachment = new Discord.MessageAttachment(imageStream);
+          const embed = new discord.RichEmbed()
+            .attachFile(attachment)
+            .setDescription(rant.text);
+          channel.send({ embed });
         }
       });
     }, 60000);
@@ -80,3 +93,43 @@ app.listen(PORT, () => {
     }
   }
 });
+
+const createImg = () => {
+  return new Promise(function(resolve, reject) {
+    try {
+      jsdom.env(
+        '<svg id="svg"></svg>',
+        ["http://d3js.org/d3.v3.min.js"],
+        function(err, window) {
+          let svg = window.d3
+            .select("svg")
+            .attr("width", 100)
+            .attr("height", 100)
+            .attr("xmlns", "http://www.w3.org/2000/svg");
+
+          svg
+            .append("rect")
+            .attr("x", 10)
+            .attr("y", 10)
+            .attr("width", 80)
+            .attr("height", 80)
+            .style("fill", "orange");
+
+          let data = "data:image/png;base64,";
+          let svgString = svg[0][0].outerHTML;
+          let buffer = new Buffer(
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+              svgString
+          );
+          let promise = svg2png(buffer, { width: 300, height: 400 });
+          promise.then(buffer => {
+            let dataURI = data + buffer.toString("base64");
+            resolve(dataURI);
+          });
+        }
+      );
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
